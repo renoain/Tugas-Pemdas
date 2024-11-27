@@ -1,0 +1,97 @@
+A#include <iostream>
+#include <cstdlib>  // rand dan srand
+#include <ctime>    // time	
+
+using namespace std;
+
+void tebakAngka()  {
+    srand(time(0));
+
+    int angka = rand() % 100 + 1; 
+    int tebakan;
+    int jumlah_tebakan = 0;
+    const int MAX_TEBAKAN = 7;  
+
+    cout << "Selamat datang di permainan Tebak Angka!" << endl;
+    cout << "Pilih angka." << endl;
+    cout << "Coba tebak angka tersebut!" << endl;
+    
+    do {
+        cout << "Masukkan tebakan Anda: ";
+        cin >> tebakan;  
+        jumlah_tebakan++;
+
+        if (tebakan < angka) {
+            cout << "Tebakanmu terlalu rendah. Coba lagi!" << endl;
+        } else if (tebakan > angka) {
+            cout << "Tebakanmu terlalu tinggi. Coba lagi!" << endl;
+        } else {
+            cout << "Selamat! Tebakanmu Benar " << angka
+                 << " dengan benar setelah " << jumlah_tebakan << " tebakan." << endl;
+            break;  
+        }
+
+        
+        if (jumlah_tebakan >= MAX_TEBAKAN) {
+            cout << "Kesempatanmu menebak habis (" << MAX_TEBAKAN << " tebakan). Permainan selesai\n"<< "Kamu Gagal "<< endl;
+            break;  
+        }
+
+    } while (tebakan != angka);  
+}
+
+void numberRandomGenerator() {
+    srand(time(0)); 
+
+    int minRange, maxRange, randomNumber;
+    
+    cout <<"Number Random Generator\n" << "Min.: ";
+    cin >> minRange;
+    cout << "Max.: ";
+    cin >> maxRange;
+
+    
+    if (minRange >= maxRange) {
+        cout << "Batasan range tidak valid. Pastikan min < max." << endl;
+        return;  
+    }
+
+    randomNumber = rand() % (maxRange - minRange + 1) + minRange;
+    cout << "Angka acak antara " << minRange << " dan " << maxRange << " adalah: " << randomNumber << endl;
+}
+
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");  
+    #else
+    #endif
+}
+
+int main() {
+    int pilihan;
+
+	do{
+	
+    cout << "Selamat datang! Pilih opsi:\n";
+    cout << "1. Tebak Angka\n";
+    cout << "2. Number Random Generator\n";
+    cout << "0. Exit\n";
+    cout << "Masukkan pilihan : ";
+    cin >> pilihan;
+
+    if (pilihan == 1) {
+        tebakAngka();  
+    } else if (pilihan == 2) {
+        numberRandomGenerator();  
+    } else if(pilihan == 0) {
+        cout << "Keluar dari Program.\n";
+    }
+}while(pilihan !=0);
+
+   return 0;
+}
+
+
+
+
+
