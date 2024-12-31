@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int MAX_PRODUK = 50;
+
+struct Produk {
+    string serial_number;
+    string nama_produk;
+    double harga_per_unit;
+    int jumlah_produk;
+};
+
+// Daftar produk 
+Produk daftar_produk[MAX_PRODUK];
+int jumlah_produk_terdaftar = 0; // Menyimpan jumlah produk yang sudah dimasukkan
+
+// Add in produk
+void tambah_produk() {
+    if (jumlah_produk_terdaftar >= MAX_PRODUK) {
+        cout << "\nStok produk sudah penuh, tidak bisa menambah produk baru.\n";
+        return;
+    }
+
+    Produk produk_baru;
+    cout << "\nMasukkan ID/Serial Number: ";
+    cin >> produk_baru.serial_number;
+    cin.ignore();  // Membersihkan buffer input setelah serial number
+    cout << "Masukkan Nama Produk: ";
+    getline(cin, produk_baru.nama_produk);
+    cout << "Masukkan Harga per Unit: ";
+    cin >> produk_baru.harga_per_unit;
+    cout << "Masukkan Jumlah Produk: ";
+    cin >> produk_baru.jumlah_produk;
+
+    // Menambahkan produk baru ke daftar
+    daftar_produk[jumlah_produk_terdaftar] = produk_baru;
+    jumlah_produk_terdaftar++;
+
+    cout << "\nProduk berhasil ditambahkan!\n";
+}
+
+// Delete produk
+void hapus_produk() {
+    string serial_number;
+    cout << "\nMasukkan ID/Serial Number produk yang akan dihapus: ";
+    cin >> serial_number;
+
+    bool ditemukan = false;
+    for (int i = 0; i < jumlah_produk_terdaftar; i++) {
+        if (daftar_produk[i].serial_number == serial_number) {
+            // Menggeser produk setelah produk yang dihapus
+            for (int j = i; j < jumlah_produk_terdaftar - 1; j++) {
+                daftar_produk[j] = daftar_produk[j + 1];
+            }
+            jumlah_produk_terdaftar--; // Mengurangi jumlah produk terdaftar
+            cout << "\nProduk dengan ID/Serial Number " << serial_number << " berhasil dihapus!\n";
+            ditemukan = true;
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "\nProduk dengan ID/Serial Number " << serial_number << " tidak ditemukan.\n";
+    }
+}
+
+// stok produk
+void cek_stok() {
+    if (jumlah_produk_terdaftar == 0) {
+        cout << "\nTidak ada produk yang terdaftar.\n";
+    } else {
+        cout << "\nDaftar Produk:\n";
+        for (int i = 0; i < jumlah_produk_terdaftar; i++) {
+            cout << "\nID/Serial Number: " << daftar_produk[i].serial_number << endl;
+            cout << "Nama Produk: " << daftar_produk[i].nama_produk << endl;
+            cout << "Harga per Unit: " << daftar_produk[i].harga_per_unit << endl;
+            cout << "Jumlah Produk: " << daftar_produk[i].jumlah_produk << endl;
+            cout << "------------------------------\n";
+        }
+    }
+}
+
+
+int main() {
+    int pilihan;
+
+    do {
+        cout << "\nMenu Pilihan:\n";
+        cout << "1. Tambah Produk\n";
+        cout << "2. Hapus Produk\n";
+        cout << "3. Cek Stok Produk\n";
+        cout << "4. Keluar\n";
+        cout << "Pilih opsi (1-4): ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                tambah_produk();
+                break;
+            case 2:
+                hapus_produk();
+                break;
+            case 3:
+                cek_stok();
+                break;
+            case 4:
+                cout << "\nTerima kasih! Program selesai.\n";
+                break;
+            default:
+                cout << "\nPilihan tidak valid. Silakan coba lagi.\n";
+                break;
+        }
+    } while (pilihan != 4);
+
+    return 0;
+}
